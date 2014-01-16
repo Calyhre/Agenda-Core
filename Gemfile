@@ -13,3 +13,7 @@ group :development do
   gem 'debugger'
   gem 'jazz_hands'
 end
+
+group :production do
+  gem 'rails_12factor'
+end
