@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'rack-cors', require: 'rack/cors'
 gem 'rails', '4.0.2'
 gem 'puma'
 gem 'pg'
