@@ -7,7 +7,7 @@ class Event < ActiveRecord::Base
 
   default_scope { where('deleted_at IS NULL') }
 
-  validates :name, :description, :start_at, :end_at, :event_type, presence: true
+  validates :name, :start_at, :end_at, :event_type, presence: true
   validates :event_type, inclusion: { in: EVENT_TYPES }
   validates :recurrent, inclusion: { in: RECURRENT_TYPES }
 end

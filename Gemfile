@@ -9,6 +9,8 @@ gem 'active_model_serializers'
 
 gem 'jbuilder', '~> 1.2'
 
+gem 'apipie-rails'
+
 group :development do
   gem 'foreman'
   gem 'debugger'
