@@ -27,7 +27,7 @@ class Api::V1::EventsController < Api::V1::ApiController
     @event = Event.new event_params
 
     if @event.save
-      render json: @event
+      render json: @event, status: :created
     else
       render json: { error: @event.errors }
     end
@@ -59,7 +59,11 @@ class Api::V1::EventsController < Api::V1::ApiController
   def destroy
     @event = Event.find_by_id params[:id]
 
-    @event.update_attribute :deleted_at, Time.current
+    if @event && @event.update_attribute :deleted_at, Time.current
+      render nothing: true, status: :ok
+    else
+      render_not_found
+    end
   end
 
   private
