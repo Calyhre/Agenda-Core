@@ -60,7 +60,7 @@ class Api::V1::EventsController < Api::V1::BaseController
     @event = Event.find_by_id params[:id]
 
     if @event && @event.update_attribute(:deleted_at, Time.current)
-      render nothing: true, status: :ok
+      render nothing: true, status: :no_content
     else
       render_not_found
     end
