@@ -1,4 +1,4 @@
-class Api::V1::EventsController < Api::V1::ApiController
+class Api::V1::EventsController < Api::V1::BaseController
 
   api :GET, '/events/', 'List events'
   def index
