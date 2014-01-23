@@ -7,7 +7,7 @@ class Api::V1::EventsController < Api::V1::ApiController
   end
 
   api :GET, '/events/:id', 'Show event :id'
-  param :id, Integer, desc: 'Event ID', required: true
+  param :id, String, desc: 'Event ID', required: true
   def show
     @event = Event.find_by_id params[:id]
     render json: @event
@@ -17,8 +17,8 @@ class Api::V1::EventsController < Api::V1::ApiController
   param :event, Hash, required: true do
     param :name, String, desc: 'Event name', required: true
     param :description, String, desc: 'Event description'
-    param :start_at, DateTime, desc: 'Event datetime start', required: true
-    param :end_at, DateTime, desc: 'Event datetime end', required: true
+    param :start_at, String, desc: 'Event datetime start', required: true
+    param :end_at, String, desc: 'Event datetime end', required: true
     param :event_type, Event::EVENT_TYPES, desc: 'Event type', required: true
     param :recurrent, Event::RECURRENT_TYPES, desc: 'Event recurrent type'
     param :place, String, desc: 'Event place address'
@@ -33,8 +33,29 @@ class Api::V1::EventsController < Api::V1::ApiController
     end
   end
 
+  api :PUT, '/events/:id', 'Update an event'
+  param :id, String, desc: 'Event ID', required: true
+  param :event, Hash, required: true do
+    param :name, String, desc: 'Event name', required: true
+    param :description, String, desc: 'Event description'
+    param :start_at, String, desc: 'Event datetime start', required: true
+    param :end_at, String, desc: 'Event datetime end', required: true
+    param :event_type, Event::EVENT_TYPES, desc: 'Event type', required: true
+    param :recurrent, Event::RECURRENT_TYPES, desc: 'Event recurrent type'
+    param :place, String, desc: 'Event place address'
+  end
+  def update
+    @event = Event.find_by_id params[:id]
+
+    if @event && @event.update_attributes(event_params)
+      render json: @event
+    else
+      render json: { error: @event.errors }
+    end
+  end
+
   api :DELETE, '/events/:id', 'Delete event :id'
-  param :id, Integer, desc: 'Event ID', required: true
+  param :id, String, desc: 'Event ID', required: true
   def destroy
     @event = Event.find_by_id params[:id]
 
